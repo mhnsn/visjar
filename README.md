@@ -60,7 +60,7 @@ You can easily add a new command by creating a new file in the commands folder a
 * [Daemon-kit](https://github.com/RecastAI/daemonkit) and [safely](https://github.com/kennethkalmer/safely) are used to provide an easy daemon setup.
 * [slack-ruby-client](https://github.com/dblock/slack-ruby-client), [faye-websocket](https://github.com/faye/faye-websocket-ruby), [HTTParty](https://github.com/jnunemaker/httparty) and [forecast_io](https://github.com/darkskyapp/forecast-ruby) are used to consume the APIs (RecastAI, Slack, Forecast.io, Google Places, Google Maps, etc.).
 * [activesupport](https://github.com/rails/rails/tree/master/activesupport), [chronic](https://github.com/mojombo/chronic) and [time_difference](https://github.com/tmlee/time_difference) are used to do data processing.
-* [rspec](https://github.com/dchelimsky/rspec), [cucumber](https://github.com/cucumber/cucumber), [filewatcher](https://github.com/thomasfl/filewatcher) and [awesome_print](https://github.com/michaeldv/awesome_print) are used fortesting and/or debugging.
+* [awesome_print](https://github.com/michaeldv/awesome_print) is used for debugging.
 
 ## Contributing
 
