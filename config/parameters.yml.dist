@@ -1,0 +1,26 @@
+base: &base
+    # Our Google CSE token
+    google_cx:    001710646861712936840:nudpy-wf614
+    # Your Google key
+    google_key:
+    # Your Forecast.io key
+    forecast_key:
+    # Your Recast.AI key
+    recast_key:
+    # Your Slack key
+    slack_key:
+    # Your location (used as fallback)
+    location:
+    # The max number of restaurant to display
+    limit_eat:    5
+    # The max number of news to display
+    limit_news:   5
+
+production:
+    <<: *base
+
+development:
+    <<: *base
+
+test:
+    <<: *base

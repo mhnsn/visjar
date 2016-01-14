@@ -1,0 +1,13 @@
+log/*.log
+VM/*.log
+cache
+config/logstash.yml
+config/parameters.yml
+.DS_Store
+db/schema.rb
+public/system/**
+.idea/
+*~
+.ruby-version
+dump.rdb
+public/uploads/

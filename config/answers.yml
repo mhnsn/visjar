@@ -1,0 +1,29 @@
+greetings: [
+    "Hi", "Hi!", "Hi! :simple_smile:", "Hi.", "Hi. :simple_smile:", "Hi :wave::skin-tone-2:",
+    "Hello", "Hello!", "Hello! :simple_smile:", "Hello.", "Hello. :simple_smile:", "Hello :wave::skin-tone-2:",
+    "Hey", "Hey!", "Hey! :simple_smile:", "Hey.", "Hey. :simple_smile:", "Hey :wave::skin-tone-2:",
+    "Hey there", "Hey there!", "Hey there! :simple_smile:", "Hey there.", "Hey there. :simple_smile:", "Hey there :wave::skin-tone-2:",
+    ":wave::skin-tone-2:"
+]
+goodbyes: [
+    "Cya", "Cya!", "Cya! :simple_smile:", "Cya.", "Cya. :simple_smile:", "Cya :wave::skin-tone-2:",
+    "Bye bye", "Bye bye!", "Bye bye! :simple_smile:", "Bye bye.", "Bye bye. :simple_smile:", "Bye bye :wave::skin-tone-2:",
+    "Goodbye", "Goodbye!", "Goodbye! :simple_smile:", "Goodbye.", "Goodbye. :simple_smile:", "Goodbye :wave::skin-tone-2:",
+    "See you later", "See you later!", "See you later! :simple_smile:", "See you later.", "See you later. :simple_smile:", "See you later :wave::skin-tone-2:",
+    ":wave::skin-tone-2:"
+]
+feelings: [
+    "I'm fine", "I'm fine!", "I'm fine! :simple_smile:", "I'm fine.", "I'm fine. :simple_smile:", "I'm fine, thanks.", "I'm fine, thanks!",
+    "I'm great", "I'm great!", "I'm great! :simple_smile:", "I'm great.", "I'm great. :simple_smile:", "I'm great, thanks.", "I'm great, thanks!",
+    "I'm feeling good", "I'm feeling good!", "I'm feeling good! :simple_smile:", "I'm feeling good.", "I'm feeling good. :simple_smile:", "I'm feeling good, thanks.", "I'm feeling good, thanks!"
+]
+thanks: [
+    "You're welcome", "You're welcome!", "You're welcome! :simple_smile:", "You're welcome.", "You're welcome. :simple_smile:"
+]
+repeats: [
+    "Excuse me, I didn't understand, could you reformulate?",
+    "Sorry, could you repeat?",
+    "I didn't grasp what you said...",
+    "Mmmh?"
+]
+

@@ -1,0 +1,76 @@
+GIT
+  remote: git://github.com/recastAI/daemonkit.git
+  revision: 22e223fdbef99c224c190e50cf78496d9b32b78e
+  specs:
+    daemon-kit (0.5.1)
+      eventmachine (>= 0.12.10)
+      thor
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (4.2.5)
+      i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
+    awesome_print (1.6.1)
+    chronic (0.10.2)
+    eventmachine (1.0.9)
+    faraday (0.9.2)
+      multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.10.0)
+      faraday (>= 0.7.4, < 0.10)
+    faye-websocket (0.10.2)
+      eventmachine (>= 0.12.0)
+      websocket-driver (>= 0.5.1)
+    forecast_io (2.0.0)
+      faraday
+      hashie
+      multi_json
+    gli (2.13.4)
+    hashie (3.4.3)
+    httparty (0.13.7)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
+    i18n (0.7.0)
+    json (1.8.3)
+    minitest (5.8.3)
+    multi_json (1.11.2)
+    multi_xml (0.5.5)
+    multipart-post (2.0.0)
+    safely (0.3.2)
+    slack-ruby-client (0.5.3)
+      faraday
+      faraday_middleware
+      gli
+      json
+      websocket-driver
+    thor (0.19.1)
+    thread_safe (0.3.5)
+    time_difference (0.4.2)
+      activesupport
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+    websocket-driver (0.6.3)
+      websocket-extensions (>= 0.1.0)
+    websocket-extensions (0.1.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activesupport
+  awesome_print
+  chronic
+  daemon-kit!
+  faye-websocket
+  forecast_io
+  httparty
+  safely
+  slack-ruby-client
+  time_difference
+
+BUNDLED WITH
+   1.11.2
