@@ -17,22 +17,20 @@ module Visjar
       # On message, check if its for us, then invoke the appropriate command
       @client.on(:message) do |slack|
         # "@visjar do something" (ping)
-        explicit_direct = (slack['text'] and (slack['text'].match(/^<@#{Config.id}>/) != nil))
+        explicit = (slack['text'] and (slack['text'].match(/^<@#{Config.id}>:?\s?/) != nil))
         # "do something" (MP)
-        implicit_direct = (Config.ims.any?{ |im| im['id'] == slack['channel'] })
+        implicit = (Config.ims.any?{ |im| im['id'] == slack['channel'] })
 
-        if slack['user'] and slack['user'] != Config.id and (explicit_direct or implicit_direct) #and slack['user'] == "U092Z6ATB"
+        if slack['user'] and slack['user'] != Config.id and (explicit or implicit)
           # Clean the sentence in order to be processed by Recast.AI
-          slack['text'].gsub!(/^<@#{Config.id}>:?\s?/, "") if explicit_direct
+          slack['text'].gsub!(/^<@#{Config.id}>:?\s?/, "")
           # Convert the request to ASCII
           slack['text'] = ActiveSupport::Inflector.transliterate(slack['text'], "")
 
-          recast = HTTParty.post("https://api.recast.ai/make/request",
+          recast = JSON.parse(HTTParty.post("https://api.recast.ai/make/request",
                                  :body    => {'request' => slack['text']},
-                                 :headers => {'Authorization' => "Token #{Config.recast_key}"})
-          @client.send_message('C09842U2C', "```#{JSON.pretty_generate(recast)}```") # TODO
-          recast = JSON.parse(recast.body) # TODO merge with HTTParty call
-          Log.info("#{self.class} | Received '#{recast['source']}' tagged as '#{recast['intents'].first ? recast['intents'].first['intent'] : 'nothing'}'.")
+                                 :headers => {'Authorization' => "Token #{Config.recast_key}"}).body)
+          Log.info("#{self.class} | Received '#{recast['source']}' tagged as '#{recast['intents'].first ? recast['intents'].first['intent'] : 'nothing'}', as '#{explicit ? 'explicit' : 'implicit'}'.")
           #ap recast # TODO
 
           if recast.empty?
