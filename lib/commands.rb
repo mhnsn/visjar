@@ -11,7 +11,7 @@ module Visjar
         klass.run(client, slack, recast) if route == intent
       end
     rescue StandardError => e
-      client.send_message(slack['channel'], "Sorry, something bad happened, my creators are on it already!")
+      client.send_message(slack['channel'], "Sorry, I can't handle this request now, but the team at RecastAI is working to fix it!")
       Log.error(e)
     end
 
