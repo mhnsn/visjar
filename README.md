@@ -2,9 +2,12 @@
 
 ![](misc/visjar.png)
 
-## Synospis
+## Synopsis
 
 Visjar is a slack bot powered by Natural Language Understanding, which means that unlike other slackbots, this one is not only aware of simple unix-like commands, but can also understand sentences and complex requests.
+
+
+During its development, we tried to create this slackbot in a way people could easily install, configure and customize it. The first, and obvious, thing to do was to offer the possibility to install Visjar in on click, thanks to the Slack button ([here](https://slackbot.recast.ai)). And the second, was to open source Visjar, and produce a detailed README, for the developers to use ([there](https://github.com/RecastAI/visjar)).
 
 ## Installation
 
@@ -68,7 +71,7 @@ You can easily add a new command by creating a new file in the commands folder a
 2. Create your feature branch (`git checkout -b feature/my-feature`)
 3. Commit your changes (`git commit -am '[ADD] some feature'`)
 4. Push to the branch (`git push origin feature/my-feature`)
-5. Create new Pull Request
+5. Create a new Pull Request
 
 ## Are you really going to read this?
 
