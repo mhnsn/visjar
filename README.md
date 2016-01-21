@@ -58,6 +58,19 @@ You can easily add a new command by creating a new file in the commands folder a
 
 ![](misc/config.gif)
 
+
+## Next steps
+
+We have a lot of ideas concerning day-to-day tasks on a Slack.. Here are some of them, and don't hesitate to reach us with yours!
+
+Put an uploaded file in the team's Google Drive.
+
+Check if a given website is down.
+
+Set a reminder.
+
+Tell a joke.
+
 ## Dependencies
 
 * [Daemon-kit](https://github.com/RecastAI/daemonkit) and [safely](https://github.com/kennethkalmer/safely) are used to provide an easy daemon setup.
