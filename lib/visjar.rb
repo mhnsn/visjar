@@ -14,6 +14,11 @@ module Visjar
         Log.info("#{self.class} | Using #{Commands.commands.keys.join(', ')}.")
       end
 
+      @client.on([:channel_joined, :group_joined]) do |slack|
+        Log.info("#{self.class} | Joined '#{slack['channel']['name']}'")
+        Commands::Help.run(@client, {'channel' => slack['channel']['id']}, nil)
+      end
+
       # On message, check if its for us, then invoke the appropriate command
       @client.on(:message) do |slack|
         # "@visjar do something" (ping)
