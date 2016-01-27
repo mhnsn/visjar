@@ -12,7 +12,8 @@ module Visjar
       end
     rescue StandardError => e
       client.send_message(slack['channel'], "Sorry, I can't handle this request now, but the team at RecastAI is working to fix it!")
-      Log.error(e)
+      Log.error("#{e.class}: #{e}")
+      Log.error(e.backtrace)
     end
 
     def self.register(route, klass)
