@@ -1,6 +1,6 @@
 base: &base
     # Our Google CSE token
-    google_cx:    001710646861712936840:nudpy-wf614
+    google_cx:    '001710646861712936840:nudpy-wf614'
     # Your Google key
     google_key:
     # Your Forecast.io key
