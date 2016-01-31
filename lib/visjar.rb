@@ -30,7 +30,7 @@ module Visjar
           # Clean the sentence in order to be processed by Recast.AI
           slack['text'].gsub!(/^<@#{Config.id}>:?\s?/, "")
 
-          recast = JSON.parse(HTTParty.post("https://localhost:9000/make/request",
+          recast = JSON.parse(HTTParty.post("https://api.recast.ai/make/request",
                                  :body    => {'request' => slack['text']},
                                  :headers => {'Authorization' => "Token #{Config.recast_key}"}).body)
           Log.info("#{self.class} | Received '#{recast['source']}' tagged as '#{recast['intents'].any? ? recast['intents'].first : 'nothing'}', as '#{explicit ? 'explicit' : 'implicit'}'.")
