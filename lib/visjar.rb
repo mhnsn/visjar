@@ -29,24 +29,20 @@ module Visjar
         if slack['user'] and slack['user'] != Config.id and (explicit or implicit)
           # Clean the sentence in order to be processed by Recast.AI
           slack['text'].gsub!(/^<@#{Config.id}>:?\s?/, "")
-          # Convert the request to ASCII
-          slack['text'] = ActiveSupport::Inflector.transliterate(slack['text'], "")
 
-          recast = JSON.parse(HTTParty.post("https://api.recast.ai/make/request",
+          recast = JSON.parse(HTTParty.post("https://localhost:9000/make/request",
                                  :body    => {'request' => slack['text']},
                                  :headers => {'Authorization' => "Token #{Config.recast_key}"}).body)
-          Log.info("#{self.class} | Received '#{recast['source']}' tagged as '#{recast['intents'].first ? recast['intents'].first['intent'] : 'nothing'}', as '#{explicit ? 'explicit' : 'implicit'}'.")
+          Log.info("#{self.class} | Received '#{recast['source']}' tagged as '#{recast['intents'].any? ? recast['intents'].first : 'nothing'}', as '#{explicit ? 'explicit' : 'implicit'}'.")
           #ap recast # TODO
 
           if recast.empty?
             @client.send_message(slack['channel'], "Oups <@#{slack['user']}>, looks like Recast.AI can't help me this time...")
           elsif recast['error'] != nil
             @client.send_message(slack['channel'], "Sorry <@#{slack['user']}> but there's an error: '#{recast['error']}'")
-          elsif recast['message'] != nil
-            @client.send_message(slack['channel'], "Sorry <@#{slack['user']}> but there's an error: '#{recast['message']}'")
           elsif recast['intents'].any?
             Commands.invoke(@client, slack, recast)
-          elsif ['what', 'where', 'who', 'when', 'how', 'why'].include?(recast['sentences'][0]["type"])
+          elsif ['what', 'where', 'who', 'when', 'how', 'why'].include?(recast['sentences'].first["type"])
             Commands::Search.run(@client, slack, recast)
           else
             @client.send_message(slack['channel'], @answers.sample)

@@ -5,7 +5,7 @@ module Visjar
     @commands = {}
 
     def self.invoke(client, slack, recast)
-      intent = recast['intents'].first['intent']
+      intent = recast['intents'].first
 
       @commands.each_pair do |route, klass|
         klass.run(client, slack, recast) if route == intent

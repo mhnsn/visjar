@@ -17,15 +17,12 @@ module Visjar
       }
 
       def self.run(client, slack, recast)
-        @datetime = nil
-        @location = nil
-        @duration = nil
-        recast    = recast['intents'].first
+        recast    = recast['sentences'].first
 
         # Get informations about the request
-        get_location(recast)
-        get_datetime(recast)
-        get_duration(recast)
+        @location = recast['entities']['location'].first['value'] rescue nil
+        @datetime = recast['entities']['datetime'].first['value'] rescue nil
+        @duration = recast['entities']['duration'].first['value'] rescue nil
 
         # If no location/type found, use the default.
         @location = Config.location if @location == nil
@@ -49,7 +46,7 @@ module Visjar
             client.send_message(slack['channel'], 'Sorry, I can\'t handle time spans just yet!')
           end
         else
-          client.send_message(slack['channel'], "Sorry, I didn't understood the location you asked for...")
+          client.send_message(slack['channel'], "Mmh, the location you asked for don't seem to exist...")
         end
       end
 
@@ -90,65 +87,6 @@ module Visjar
         text << " in " + @location.titleize
 
         text
-      end
-
-      # Helper to get the location
-      # Will be removed after the next JSON iteration! TODO
-      def self.get_location(recast)
-        if recast['entity'] == 'location'
-          @location = recast['value']
-        elsif recast['at_location'].is_a?(String)
-          @location = recast['at_location']
-        end
-
-        return if @location
-
-        get_location(recast['at_value']) if recast['at_value'].is_a?(Hash)
-        get_location(recast['for']) if recast['for']
-        get_location(recast['agent']) if recast['agent']
-        get_location(recast['action']) if recast['action']
-        get_location(recast['theme']) if recast['theme']
-        get_location(recast['attributes']) if recast['attributes']
-        get_location(recast['temporal_modifier']) if recast['temporal_modifier'].is_a?(Hash)
-        get_location(recast['at_location']) if recast['at_location'].is_a?(Hash)
-      end
-
-      # Helper to get the datetime of the sentence
-      # Will be removed after the next JSON iteration! TODO
-      def self.get_datetime(recast)
-        if recast['entity'] == 'datetime'
-          @datetime = recast['value']
-        elsif recast['temporal_modifier'].is_a?(String)
-          @datetime = recast['temporal_modifier']
-        end
-
-        return if @datetime
-
-        get_datetime(recast['at_value']) if recast['at_value'].is_a?(Hash)
-        get_datetime(recast['for']) if recast['for']
-        get_datetime(recast['agent']) if recast['agent']
-        get_datetime(recast['action']) if recast['action']
-        get_datetime(recast['theme']) if recast['theme']
-        get_datetime(recast['attributes']) if recast['attributes']
-        get_datetime(recast['temporal_modifier']) if recast['temporal_modifier'].is_a?(Hash)
-        get_datetime(recast['at_location']) if recast['at_location'].is_a?(Hash)
-      end
-
-      # Helper to get the duration from the sentence
-      # Will be removed after the next JSON iteration! TODO
-      def self.get_duration(recast)
-        @duration = recast['value'] if recast['entity'] == 'duration'
-
-        return if @duration
-
-        get_duration(recast['at_value']) if recast['at_value'].is_a?(Hash)
-        get_duration(recast['for']) if recast['for']
-        get_duration(recast['agent']) if recast['agent']
-        get_duration(recast['action']) if recast['action']
-        get_duration(recast['theme']) if recast['theme']
-        get_duration(recast['attributes']) if recast['attributes']
-        get_duration(recast['temporal_modifier']) if recast['temporal_modifier'].is_a?(Hash)
-        get_duration(recast['at_location']) if recast['at_location'].is_a?(Hash)
       end
 
       Commands::register("weather", self) if Config.google_key and ForecastIO.api_key

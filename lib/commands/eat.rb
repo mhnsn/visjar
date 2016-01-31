@@ -5,19 +5,16 @@ module Visjar
   module Commands
     class Eat
       def self.run(client, slack, recast)
-        @location = nil
-        @sort     = nil
-        @type     = nil
-        recast    = recast['intents'].first
+        recast    = recast['sentences'].first
 
         # Get informations about the request
-        get_location(recast)
-        get_sort(recast)
-        get_type(recast)
+        @location = recast['entities']['location'].first['value'] rescue nil
+        @sort     = recast['entities']['sort'].first['value']     rescue nil
+        @type     = get_type(recast['source'])
 
         # If no location/type found, use the default.
         @location = Config.location if @location == nil
-        @type     = 'restaurant' if @type == nil
+        @type     = 'restaurant'    if @type == nil
 
         response = JSON.parse(HTTParty.get("https://maps.googleapis.com/maps/api/geocode/json?address=#{@location.gsub(/\s+/, '+')}&key=#{Config.google_key}").body)
         if response["status"] == 'OK'
@@ -62,69 +59,17 @@ module Visjar
             client.send_message(slack['channel'], "Sorry, I could not find any restaurant near #{@location}...")
           end
         else
-          client.send_message(slack['channel'], "Sorry, I didn't understood the location you asked for...")
+          client.send_message(slack['channel'], "Mmh, the location you asked for don't seem to exist...")
         end
-      end
-
-      # Helper to get the location
-      # Will be removed after the next JSON iteration! TODO
-      def self.get_location(recast)
-        if recast['entity'] == 'location'
-          @location = recast['value']
-        elsif recast['at_location'].is_a?(String)
-          @location = recast['at_location']
-        end
-
-        return if @location
-
-        get_location(recast['at_value']) if recast['at_value'].is_a?(Hash)
-        get_location(recast['for']) if recast['for']
-        get_location(recast['agent']) if recast['agent']
-        get_location(recast['action']) if recast['action']
-        get_location(recast['theme']) if recast['theme']
-        get_location(recast['attributes']) if recast['attributes']
-        get_location(recast['temporal_modifier']) if recast['temporal_modifier'].is_a?(Hash)
-        get_location(recast['at_location']) if recast['at_location'].is_a?(Hash)
-      end
-
-      # Helper to get the sort criterion
-      # Will be removed after the next JSON iteration! TODO
-      def self.get_sort(recast)
-        @sort = recast['value'] if recast['entity'] == 'sort'
-
-        return if @sort
-
-        get_sort(recast['at_value']) if recast['at_value'].is_a?(Hash)
-        get_sort(recast['for']) if recast['for']
-        get_sort(recast['agent']) if recast['agent']
-        get_sort(recast['action']) if recast['action']
-        get_sort(recast['theme']) if recast['theme']
-        get_sort(recast['attributes']) if recast['attributes']
-        get_sort(recast['temporal_modifier']) if recast['temporal_modifier'].is_a?(Hash)
-        get_sort(recast['at_location']) if recast['at_location'].is_a?(Hash)
       end
 
       # Helper to get the type criterion
-      # Will be removed after the next JSON iteration! TODO
-      def self.get_type(recast)
-        if recast['entity'] == 'list'
-          recast['values'].each do |v|
-            @type = v['value'] if Utils::TYPES.include?(v['value'])
-          end
-        else
-          @type = recast['value'] if Utils::TYPES.include?(recast['value'])
+      def self.get_type(sentence)
+        sentence.split(/\s+|\;|\,}\:|\(|\)/).each do |w|
+          return w if Utils::TYPES.include?(w.downcase)
         end
 
-        return if @type
-
-        get_type(recast['at_value']) if recast['at_value'].is_a?(Hash)
-        get_type(recast['for']) if recast['for']
-        get_type(recast['agent']) if recast['agent']
-        get_type(recast['action']) if recast['action']
-        get_type(recast['theme']) if recast['theme']
-        get_type(recast['attributes']) if recast['attributes']
-        get_type(recast['temporal_modifier']) if recast['temporal_modifier'].is_a?(Hash)
-        get_type(recast['at_location']) if recast['at_location'].is_a?(Hash)
+        nil
       end
 
       Commands::register("eat", self) if Config.location and Config.google_key and Config.google_key and Config.limit_eat != nil
