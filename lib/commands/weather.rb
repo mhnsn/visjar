@@ -67,7 +67,7 @@ module Visjar
         # Temperature
         text << " #{forecast.temperature.to_f.round(1)}°C"
         # Precipitation
-        text << " with a #{(forecast.precipProbability.to_f * 100).round}% probability of #{forecast.precipType}" if forecast.precipProbability >= 0.10
+        text << " with a #{(forecast.precipProbability.to_f * 100).round}% probability of #{forecast.precipType}" if forecast.precipProbability.nil? == false and forecast.precipProbability >= 0.10
         # Wind
         case forecast.windSpeed
         when 0..5
