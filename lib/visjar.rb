@@ -33,19 +33,22 @@ module Visjar
           recast = JSON.parse(HTTParty.post("https://api.recast.ai/make/request",
                                  :body    => {'request' => slack['text']},
                                  :headers => {'Authorization' => "Token #{Config.recast_key}"}).body)
-          Log.info("#{self.class} | Received '#{recast['source']}' tagged as '#{recast['intents'].any? ? recast['intents'].first : 'nothing'}', as '#{explicit ? 'explicit' : 'implicit'}'.")
           #ap recast # TODO
 
           if recast.empty?
             @client.send_message(slack['channel'], "Oups <@#{slack['user']}>, looks like Recast.AI can't help me this time...")
           elsif recast['error'] != nil
             @client.send_message(slack['channel'], "Sorry <@#{slack['user']}> but there's an error: '#{recast['error']}'")
-          elsif recast['intents'].any?
-            Commands.invoke(@client, slack, recast)
-          elsif ['what', 'where', 'who', 'when', 'how', 'why'].include?(recast['sentences'].first["type"])
-            Commands::Search.run(@client, slack, recast)
           else
-            @client.send_message(slack['channel'], @answers.sample)
+            Log.info("#{self.class} | Received '#{recast['source']}' tagged as '#{recast['intents'].any? ? recast['intents'].first : 'nothing'}', as '#{explicit ? 'explicit' : 'implicit'}'.")
+
+            if recast['intents'].any?
+              Commands.invoke(@client, slack, recast)
+            elsif ['what', 'where', 'who', 'when', 'how', 'why'].include?(recast['sentences'].first["type"])
+              Commands::Search.run(@client, slack, recast)
+            else
+              @client.send_message(slack['channel'], @answers.sample)
+            end
           end
         end
       end
