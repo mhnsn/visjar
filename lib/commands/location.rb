@@ -7,6 +7,7 @@ module Visjar
         # Get informations about the request
         @location = recast['entities']['location'].first['value'] rescue nil
         if @location
+          Config.location = @location
           client.send_message(slack['channel'], "Thanks, I just set your location to '#{@location.titleize}'.")
         else
           client.send_message(slack['channel'], "Woops, are you sure you provided your location?")
