@@ -4,7 +4,7 @@ module Visjar
   class Utils
     # Versioning
     MAJOR   = "0"
-    MINOR   = "1"
+    MINOR   = "2"
     MICRO   = "0"
     VERSION = "#{MAJOR}.#{MINOR}.#{MICRO}"
 

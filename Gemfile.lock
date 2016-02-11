@@ -35,6 +35,7 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
+    iso-639 (0.2.5)
     json (1.8.3)
     minitest (5.8.3)
     multi_json (1.11.2)
@@ -68,6 +69,7 @@ DEPENDENCIES
   faye-websocket
   forecast_io
   httparty
+  iso-639
   safely
   slack-ruby-client
   time_difference

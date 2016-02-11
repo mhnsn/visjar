@@ -11,6 +11,8 @@ base: &base
     slack_key:
     # Your location (used as fallback)
     location:
+    # Your locale (used as fallback)
+    locale:
     # The max number of restaurant to display
     limit_eat:    5
     # The max number of news to display

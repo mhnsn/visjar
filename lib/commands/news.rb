@@ -1,22 +1,21 @@
 require 'time_difference'
+require 'iso-639'
 
 module Visjar
   module Commands
     class News
-      @locale = begin
-        result = JSON.parse(HTTParty.get("https://maps.googleapis.com/maps/api/geocode/json?address=#{Config.location.gsub(/\s+/, '+')}&key=#{Config.google_key}").body)
-        if result['status'] == 'OK'
-          result['results'].first['address_components'].each do |item|
-            if item['types'].include?('country')
-              break item['short_name'].downcase
-            end
-          end
-        else
-          'us'
-        end
-      end
-
       def self.run(client, slack, recast)
+        recast = recast['sentences'].first
+
+        # Get informations about the request
+        @nationality = recast['entities']['nationality'].first['value'] rescue nil
+        if @nationality
+          loc     = ISO_639.find_by_english_name(@nationality.capitalize)
+          @locale = loc.any? ? loc[2] : Config.locale
+        else
+          @locale = Config.locale
+        end
+
         response = JSON.parse(HTTParty.get("http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=#{Config.limit_news}&q=https%3A%2F%2Fnews.google.com%2Fnews%3Fned%3D#{@locale}%26output%3Drss").body)
 
         if response['responseStatus'] == 200
@@ -55,7 +54,7 @@ module Visjar
         end
       end
 
-      Commands::register("news", self) if Config.limit_news != nil
+      Commands::register("news", self) if Config.locale != nil and Config.limit_news != nil
     end
   end
 end

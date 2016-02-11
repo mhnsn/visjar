@@ -23,6 +23,7 @@ Visjar::Config.configure do |config|
   config.google_cx  = p['google_cx']
   config.recast_key = p['recast_key']
   config.location   = p['location']
+  config.locale     = p['locale']
   config.limit_eat  = p['limit_eat']
   config.limit_news = p['limit_news']
 end

@@ -7,6 +7,7 @@ module Visjar
       attr_accessor :slack_key
       attr_accessor :forecast_key
       attr_accessor :location
+      attr_accessor :locale
       attr_accessor :limit_eat, :limit_news
       attr_accessor :id, :url, :team, :team_id, :names, :ims, :users
 
