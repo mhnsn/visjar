@@ -35,23 +35,27 @@ The workflow inside Visjar is as follows:
 Here's the list of the currently implemented commands:
 
 * Salutations (Greetings, Goodbyes, Feelings, Thanks, Help)
+* Settings (location for weather cast and restaurant finding, locale for the news)
 * Weather cast
 * Restaurant finding
 * News
 * Google search
+* Website status check
 
 ## Configuration
 
 Most of the configuration must be done in the `parameters.yml` file in order to have a default visjar working.
 Visjar is relying on many APIs to provide you those commands, and here's a breakdown of what command uses which API:
 
-The eat command uses Google Geocoding, Google Places and Google Static Maps.
 
-The weather command works with Google Geocoding and Forecast.io.
+The `eat` command uses Google Geocoding, Google Places and Google Static Maps.
 
-The news command doesn't have an API dependency.
+The `weather` command works with Google Geocoding and Forecast.io.
 
-The search command relies on Google Custom Search.
+The `news` and `up` commands doesn't have an API dependency.
+
+The `search` command relies on Google Custom Search.
+
 
 All the commands Visjar can perform are situated in `lib/commands/` and are loaded during boot by the file `config/environment.rb`.
 You can easily add a new command by creating a new file in the commands folder and add a requiring line in the environment file.
