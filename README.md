@@ -69,8 +69,6 @@ We have a lot of ideas concerning day-to-day tasks on a Slack.. Here are some of
 
 Put an uploaded file in the team's Google Drive.
 
-Check if a given website is down.
-
 Set a reminder.
 
 Tell a joke.
