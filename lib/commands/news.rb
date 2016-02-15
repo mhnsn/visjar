@@ -11,12 +11,12 @@ module Visjar
         @nationality = recast['entities']['nationality'].first['value'] rescue nil
         if @nationality
           loc     = ISO_639.find_by_english_name(@nationality.capitalize)
-          @locale = loc.any? ? loc[2] : Config.locale
+          locale = loc.any? ? loc[2] : Config.locale
         else
-          @locale = Config.locale
+          locale = Config.locale
         end
 
-        response = JSON.parse(HTTParty.get("http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=#{Config.limit_news}&q=https%3A%2F%2Fnews.google.com%2Fnews%3Fned%3D#{@locale}%26output%3Drss").body)
+        response = JSON.parse(HTTParty.get("http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=#{Config.limit_news}&q=https%3A%2F%2Fnews.google.com%2Fnews%3Fned%3D#{locale}%26output%3Drss").body)
 
         if response['responseStatus'] == 200
           news = response['responseData']['feed']
