@@ -9,7 +9,7 @@ module Visjar
         if @nationality
           loc           = ISO_639.find_by_english_name(@nationality.capitalize)
           Config.locale = loc[2] if loc.any?
-          client.send_message(slack['channel'], "Thanks, I just set your locale to '#{@nationality.capitalize}'.")
+          client.send_message(slack['channel'], "Thanks, you'll now receive the news in '#{@nationality.capitalize}'.")
         else
           client.send_message(slack['channel'], "Woops, are you sure you provided your language?")
         end
