@@ -70,7 +70,6 @@ module Visjar
       Config.team_id = auth['team_id']
       Config.names   = ["#{auth['user']}", "#{auth['user']}:", "<@#{auth['user_id']}>", "<@#{auth['user_id']}>:"]
       Config.ims     = @client.web_client.im_list['ims']
-      Config.users   = @client.web_client.users_list['members']
 
       # Start the client
       @client.start!
