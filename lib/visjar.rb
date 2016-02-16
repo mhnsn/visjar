@@ -31,7 +31,7 @@ module Visjar
           slack['text'].gsub!(/^<@#{Config.id}>:?\s?/, "")
 
           recast = JSON.parse(HTTParty.post("https://api.recast.ai/request",
-                                 :body    => {'request' => slack['text']},
+                                 :body    => {'text' => slack['text']},
                                  :headers => {'Authorization' => "Token #{Config.recast_key}"}).body)
           #ap recast # TODO
 
