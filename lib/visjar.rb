@@ -29,6 +29,7 @@ module Visjar
         if slack['user'] and slack['user'] != Config.id and (explicit or implicit)
           # Clean the sentence in order to be processed by Recast.AI
           slack['text'].gsub!(/^<@#{Config.id}>:?\s?/, "")
+          slack['text'] = Slack::Messages::Formatting.unescape(slack['text'])
 
           recast = JSON.parse(HTTParty.post("https://api.recast.ai/request",
                                  :body    => {'text' => slack['text']},
