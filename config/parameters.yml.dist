@@ -10,9 +10,9 @@ base: &base
     # Your Slack key
     slack_key:
     # Your location (used as fallback)
-    location:
+    location:     {lat: 48.856614, lng: 2.3522219, raw: 'Paris'}
     # Your locale (used as fallback)
-    locale:
+    locale:       'fr'
     # The max number of restaurant to display
     limit_eat:    5
     # The max number of news to display

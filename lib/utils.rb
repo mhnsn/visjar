@@ -8,7 +8,7 @@ module Visjar
     MICRO   = "0"
     VERSION = "#{MAJOR}.#{MINOR}.#{MICRO}"
 
-    # Dirty hack because RecastAI can't detect food types jutst yet :(
+    # Dirty hack because RecastAI can't detect food types just yet :(
     TYPES   = [
       'pizza',
       'crepe',
@@ -25,7 +25,11 @@ module Visjar
       'japanese',
       'lebanese',
       'french',
-      'corean',
+      'korean',
+      'german',
+      'vegan',
+      'vegetarian',
+      'meat'
     ]
   end
 end

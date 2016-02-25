@@ -5,10 +5,11 @@ module Visjar
         recast = recast['sentences'].first
 
         # Get informations about the request
-        @location = recast['entities']['location'].first['value'] rescue nil
+        @location = recast['entities']['location'].first rescue nil
+
         if @location
           Config.location = @location
-          client.send_message(slack['channel'], "Thanks, I'll now use '#{@location.titleize}' for the weather and the restaurants.")
+          client.send_message(slack['channel'], "Thanks, I'll now use '#{@location['raw'].titleize}' for the weather and the restaurants.")
         else
           client.send_message(slack['channel'], "Woops, are you sure you provided your location?")
         end

@@ -20,33 +20,21 @@ module Visjar
         recast    = recast['sentences'].first
 
         # Get informations about the request
-        @location = recast['entities']['location'].first['value'] rescue nil
-        @datetime = recast['entities']['datetime'].first['value'] rescue nil
-        @duration = recast['entities']['duration'].first['value'] rescue nil
+        @location = recast['entities']['location'].first rescue nil
+        @datetime = recast['entities']['datetime'].first rescue nil
+        @duration = recast['entities']['duration'].first rescue nil
 
         # If no location/type found, use the default.
         @location = Config.location if @location == nil
+        @datetime = {'value'=> Time.now.to_i, 'raw' => 'today'} if @datetime == nil
 
-        response = JSON.parse(HTTParty.get("https://maps.googleapis.com/maps/api/geocode/json?address=#{@location.gsub(/\s+/, '+')}&key=#{Config.google_key}").body)
-        if response['status'] == 'OK'
-          pos = response['results'].first['geometry']['location']
+        if @duration == nil
+          forecast = ForecastIO.forecast(@location['lat'], @location['lng'], params:{units:'ca'}, time: @datetime['value'])
+          answer   = generate_answer(recast, forecast.currently)
 
-          if @datetime != nil
-            time = Chronic.parse(@datetime).to_i
-          elsif @duration == nil
-            time = Time.now.to_i
-          end
-
-          if time != nil
-            forecast = ForecastIO.forecast(pos['lat'], pos['lng'], params:{units:'ca'}, time: time)
-            answer   = generate_answer(recast, forecast.currently)
-
-            client.send_message(slack['channel'], answer)
-          else
-            client.send_message(slack['channel'], 'Sorry, I can\'t handle time spans just yet!')
-          end
+          client.send_message(slack['channel'], answer)
         else
-          client.send_message(slack['channel'], "Mmh, the location you asked for don't seem to exist...")
+          client.send_message(slack['channel'], 'Sorry, I can\'t handle time spans just yet!')
         end
       end
 
@@ -54,7 +42,7 @@ module Visjar
         text = ""
 
         # Datetime
-        text << (@datetime == nil ? "today" : @datetime).capitalize
+        text << @datetime['raw'].capitalize
         # Conjugation
         case recast['tense']
         when "past"
@@ -84,7 +72,7 @@ module Visjar
         # Convert forecast icons to slack icons
         text << " (#{@icons[forecast.icon]})"
         # Location
-        text << " in " + @location.titleize
+        text << " in " + @location['raw'].titleize
 
         text
       end

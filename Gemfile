@@ -11,11 +11,6 @@ group :default do
   gem 'httparty'
   gem 'forecast_io'
 
-  # Normalization
-  gem 'chronic'
-  gem 'time_difference'
-  gem 'iso-639'
-
   # Utils
   gem 'activesupport', require: 'active_support'
 end

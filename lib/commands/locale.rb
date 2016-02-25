@@ -5,11 +5,15 @@ module Visjar
         recast = recast['sentences'].first
 
         # Get informations about the request
-        @nationality = recast['entities']['nationality'].first['value'] rescue nil
+        @nationality = recast['entities']['nationality'].first rescue nil
+        @language    = recast['entities']['language'].first rescue nil
+
         if @nationality
-          loc           = ISO_639.find_by_english_name(@nationality.capitalize)
-          Config.locale = loc[2] if loc.any?
-          client.send_message(slack['channel'], "Thanks, you'll now receive the news in '#{@nationality.capitalize}'.")
+          Config.locale = @nationality['code']
+          client.send_message(slack['channel'], "Thanks, you'll now receive the news in '#{@nationality['raw'].capitalize}'.")
+        elsif @language
+          Config.locale = @language['code']
+          client.send_message(slack['channel'], "Thanks, you'll now receive the news in '#{@language['raw'].capitalize}'.")
         else
           client.send_message(slack['channel'], "Woops, are you sure you provided your language?")
         end
