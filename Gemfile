@@ -6,13 +6,13 @@ group :default do
   gem 'safely'
 
   # APIs
-  gem 'slack-ruby-client'
+  gem 'slack-ruby-client', '>= 0.6.0'
   gem 'faye-websocket'
-  gem 'httparty'
+  gem 'httparty', '>= 0.14.0'
   gem 'forecast_io'
 
   # Utils
-  gem 'activesupport', require: 'active_support'
+  gem 'activesupport', '4.2.8'
 end
 
 group :development do
