@@ -12,7 +12,7 @@ group :default do
   gem 'forecast_io'
 
   # Utils
-  gem 'activesupport', require: 'active_support'
+  gem 'activesupport', '>= 5.2.4.3', require: 'active_support'
 end
 
 group :development do
