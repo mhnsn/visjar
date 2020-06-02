@@ -6,8 +6,8 @@ group :default do
   gem 'safely'
 
   # APIs
-  gem 'slack-ruby-client'
-  gem 'faye-websocket'
+  gem 'slack-ruby-client', '>= 0.6.0'
+  gem 'faye-websocket', '>= 0.10.3'
   gem 'httparty'
   gem 'forecast_io'
 
