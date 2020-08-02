@@ -7,7 +7,7 @@ group :default do
 
   # APIs
   gem 'slack-ruby-client'
-  gem 'faye-websocket'
+  gem 'faye-websocket', '>= 0.11.0'
   gem 'httparty'
   gem 'forecast_io'
 
